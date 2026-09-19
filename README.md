@@ -16,3 +16,6 @@ Sayt: http://127.0.0.1:8000/
 Swagger: http://127.0.0.1:8000/swagger/
 
 Interfeys matnlari oddiy o'zbek tilida.
+# Exam loyihasi
+
+Django o'quv loyihasi.
