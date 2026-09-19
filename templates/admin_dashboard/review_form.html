@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Sharhni tahrirlash{% endblock %}
+{% block content %}
+<h1>Sharhni tahrirlash</h1>
+<p><strong>Foydalanuvchi:</strong> {{ review.user.username }}</p>
+<p><strong>Kitob:</strong> {{ review.book.title }}</p>
+<form method="post">{% csrf_token %}
+<select class="form-select mb-2" name="rating"><option value="5" {% if review.rating == 5 %}selected{% endif %}>5</option><option value="4" {% if review.rating == 4 %}selected{% endif %}>4</option><option value="3" {% if review.rating == 3 %}selected{% endif %}>3</option><option value="2" {% if review.rating == 2 %}selected{% endif %}>2</option><option value="1" {% if review.rating == 1 %}selected{% endif %}>1</option></select>
+<textarea class="form-control mb-3" name="comment" required>{{ review.comment }}</textarea>
+<button class="btn btn-success">Saqlash</button> <a class="btn btn-secondary" href="{% url 'dashboard_reviews' %}">Bekor qilish</a>
+</form>
+{% endblock %}

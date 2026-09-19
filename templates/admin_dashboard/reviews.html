@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Sharhlarni boshqarish{% endblock %}
+{% block content %}
+<h1>Sharhlar</h1>
+<table class="table table-bordered bg-white">
+<tr><th>Foydalanuvchi</th><th>Kitob</th><th>Baho</th><th>Izoh</th><th>Amal</th></tr>
+{% for review in reviews %}
+<tr>
+<td>{{ review.user.username }}</td><td>{{ review.book.title }}</td><td>⭐ {{ review.rating }}</td><td>{{ review.comment }}</td>
+<td><a href="{% url 'dashboard_review_edit' review.id %}" class="btn btn-sm btn-warning">Tahrirlash</a> <form method="post" action="{% url 'dashboard_review_delete' review.id %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-danger">O‘chirish</button></form></td>
+</tr>
+{% empty %}<tr><td colspan="5">Hali sharhlar yo‘q.</td></tr>{% endfor %}
+</table>
+{% endblock %}

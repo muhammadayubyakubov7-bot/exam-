@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
+<div class="row mb-4"><div class="col-md-4">{% if book.cover_image %}<img src="{{ book.cover_image.url }}" class="img-fluid rounded shadow">{% else %}<div class="bg-secondary text-white p-5 rounded text-center">Rasm yo‘q</div>{% endif %}</div>
+<div class="col-md-8"><h1>{{ book.title }}</h1><h5>Muallif: {{ book.author }}</h5><p>{{ book.description }}</p><p>Nashr sanasi: {{ book.published_date|default:'Ko‘rsatilmagan' }}</p><h5>O‘rtacha baho: ⭐ {{ avg_rating }}</h5></div></div>
+<hr><h2>Sharhlar</h2>
+{% for review in reviews %}<div class="card mb-2"><div class="card-body"><strong>{{ review.user.username }}</strong> — ⭐ {{ review.rating }}<p class="mb-1">{{ review.comment }}</p>{% if user == review.user %}<a href="{% url 'edit_my_review' review.id %}" class="btn btn-sm btn-outline-warning">Tahrirlash</a> <a href="{% url 'delete_my_review' review.id %}" class="btn btn-sm btn-outline-danger">O‘chirish</a>{% endif %}</div></div>{% empty %}<p>Hali sharhlar yo‘q.</p>{% endfor %}
+{% if user.is_authenticated and not my_review %}<div class="card mt-4"><div class="card-body"><h4>Sharh qoldirish</h4><form method="post" action="{% url 'add_review' book.id %}">{% csrf_token %}<select class="form-select mb-2" name="rating"><option value="5">5 - A’lo</option><option value="4">4 - Yaxshi</option><option value="3">3 - O‘rtacha</option><option value="2">2 - Yomon</option><option value="1">1 - Juda yomon</option></select><textarea class="form-control mb-2" name="comment" placeholder="Fikringizni yozing" required></textarea><button class="btn btn-primary">Sharh yuborish</button></form></div></div>{% elif not user.is_authenticated %}<p class="mt-4"><a href="{% url 'login' %}">Kirish</a> qilib sharh qoldiring.</p>{% endif %}
+{% endblock %}

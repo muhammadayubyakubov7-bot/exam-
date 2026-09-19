@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Bosh sahifa{% endblock %}
+{% block content %}
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+    <h1>Kitoblar olamiga xush kelibsiz!</h1>
+    <p class="lead">Sevimli kitoblaringizni toping va o‘z fikringizni qoldiring.</p>
+    <a class="btn btn-primary" href="{% url 'book_list' %}">Kitoblarni ko‘rish</a>
+</div>
+<h2 class="mb-3">Yangi qo‘shilgan kitoblar</h2>
+<div class="row">
+{% for book in books %}
+<div class="col-md-4 mb-4"><div class="card h-100 shadow-sm">
+    {% if book.cover_image %}<img src="{{ book.cover_image.url }}" class="card-img-top" style="height:280px;object-fit:cover">{% endif %}
+    <div class="card-body"><h5>{{ book.title }}</h5><p class="text-muted">{{ book.author }}</p><a class="btn btn-outline-primary" href="{% url 'book_detail' book.id %}">Batafsil ko‘rish</a></div>
+</div></div>
+{% empty %}<p>Hozircha kitoblar yo‘q.</p>{% endfor %}
+</div>
+{% endblock %}
